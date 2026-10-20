@@ -1,0 +1,683 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ona Tili Lug'ati</title>
+
+    <style>
+       
+
+/* ===== UZBEK DICTIONARY DESIGN ===== */
+
+:root {
+  --bg: #f5f7fc;
+  --surface: #ffffff;
+  --text: #182238;
+  --muted: #778198;
+  --primary: #5b5ce2;
+  --primary-hover: #4849c9;
+  --border: #e6e9f2;
+  --shadow: 0 8px 28px rgba(30, 41, 80, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+}
+
+header {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  padding: 36px 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+header p {
+  margin: 10px 0 0;
+  color: #eeedff;
+  font-size: 16px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  padding: 9px 15px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+nav a:hover {
+  background: #efefff;
+  color: var(--primary);
+}
+
+main {
+  width: min(900px, 92%);
+  margin: 35px auto;
+}
+
+section {
+  margin-bottom: 26px;
+}
+
+h2 {
+  font-size: 25px;
+  line-height: 1.3;
+  margin: 0 0 16px;
+}
+
+h3 {
+  line-height: 1.35;
+}
+
+input,
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  margin: 10px 0;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(91, 92, 226, 0.12);
+}
+
+button {
+  display: inline-block;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  margin: 5px 4px 5px 0;
+  background: var(--primary);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #aaaaff;
+  outline-offset: 3px;
+}
+
+.card,
+.word-card,
+.result,
+.dictionary-item,
+article {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  margin: 15px 0;
+  box-shadow: var(--shadow);
+  overflow-wrap: anywhere;
+}
+
+.card h3,
+.word-card h3,
+.result h3,
+.dictionary-item h3,
+article h3 {
+  margin-top: 0;
+  color: var(--primary);
+}
+
+a {
+  color: var(--primary);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+footer {
+  padding: 25px 16px;
+  text-align: center;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  margin-top: 45px;
+}
+
+::selection {
+  background: var(--primary);
+  color: white;
+}
+
+/* ===== DARK MODE ===== */
+
+body.dark {
+  --bg: #101522;
+  --surface: #1a2233;
+  --text: #edf1fa;
+  --muted: #a5b0c5;
+  --primary: #9995ff;
+  --primary-hover: #817cf0;
+  --border: #303b50;
+  --shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+}
+
+body.dark nav a:hover {
+  background: #29304a;
+}
+
+body.dark header {
+  background: linear-gradient(135deg, #25265e, #45246f);
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 600px) {
+  header {
+    padding: 28px 16px;
+  }
+
+  main {
+    width: 94%;
+    margin: 22px auto;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .card,
+  .word-card,
+  .result,
+  .dictionary-item,
+  article {
+    padding: 17px;
+    border-radius: 14px;
+  }
+
+  button {
+    max-width: 100%;
+  }
+}
+
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>📚 Ona Tili Lug'ati</h1>
+        <p>O‘zbek tilining boyligini birgalikda o‘rganamiz</p>
+    </header>
+
+    <main>
+        <h2>So‘z izlash</h2>
+
+        <form class="search" id="searchForm">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Masalan: ma’rifat"
+                aria-label="Qidiriladigan so‘z"
+            >
+            <button type="submit">Qidirish</button>
+        </form>
+
+        <div class="word-card" id="result" aria-live="polite">
+            <h2>Ma’rifat</h2>
+            <p><b>Izoh:</b> Bilim, ilm va madaniyat orqali inson ongini yuksaltirish.</p>
+            <p><b>Misol:</b> Ma’rifat jamiyat taraqqiyotida muhim o‘rin tutadi.</p>
+        </div>
+    </main>
+
+    <footer>
+        Ona Tili Lug'ati © 2026
+    </footer>
+
+    <script>
+        // Lug'atimizdagi so'zlar
+        
+const lugat = [
+{soz:"adab",izoh:"Odob-axloq va yaxshi xulq me’yorlari.",misol:"Adab insonni bezaydi."},
+{soz:"adolat",izoh:"Haq va haqqoniylikka rioya qilish.",misol:"Adolat jamiyat uchun muhim."},
+{soz:"ahillik",izoh:"O‘zaro totuvlik va hamjihatlik.",misol:"Oilamizda ahillik hukm suradi."},
+{soz:"aql",izoh:"Fikrlash va anglash qobiliyati.",misol:"Aql bilan ish tutish kerak."},
+{soz:"an’ana",izoh:"Avlodlardan avlodlarga o‘tib keladigan urf-odat.",misol:"Navro‘z qadimiy an’anamizdir."},
+{soz:"andisha",izoh:"Boshqalarni o‘ylab, mulohaza bilan ish tutish.",misol:"U andisha bilan javob berdi."},
+{soz:"armon",izoh:"Amalga oshmagan istak yoki orzu.",misol:"Uning katta armoni bor edi."},
+{soz:"asr",izoh:"Yuz yillik vaqt davri.",misol:"Biz yigirma birinchi asrda yashaymiz."},
+{soz:"atalama",izoh:"Muayyan tushunchani bildiruvchi maxsus so‘z yoki birikma.",misol:"Bu fan yangi atamalarni o‘rgatadi."},
+{soz:"baxt",izoh:"Quvonch va mamnunlik bilan bog‘liq holat.",misol:"Oila davrasida bo‘lish men uchun baxt."},
+{soz:"barkamol",izoh:"Har tomonlama yetuk va rivojlangan.",misol:"Barkamol avlod yurt kelajagidir."},
+{soz:"baho",izoh:"Narsa qiymati yoki ish natijasini ko‘rsatuvchi belgi.",misol:"O‘qituvchi javobimga yaxshi baho qo‘ydi."},
+{soz:"bardosh",izoh:"Qiyinchilikka chidash qobiliyati.",misol:"U sinovlarga bardosh berdi."},
+{soz:"bunyodkor",izoh:"Yaratuvchi va quruvchi inson.",misol:"Bunyodkor inson yangi imkoniyatlar yaratadi."},
+{soz:"daho",izoh:"Favqulodda yuksak iste’dodga ega inson.",misol:"U buyuk daholarning hayotini o‘rgandi."},
+{soz:"dard",izoh:"Jismoniy yoki ruhiy azob, tashvish.",misol:"Do‘stiga dardini aytib yengil tortdi."},
+{soz:"davlat",izoh:"Muayyan hudud, aholi va boshqaruv tizimiga ega siyosiy tuzilma.",misol:"O‘zbekiston mustaqil davlatdir."},
+{soz:"did",izoh:"Go‘zallik va uyg‘unlikni his etish qobiliyati.",misol:"Uning kiyinish didi yaxshi."},
+{soz:"diqqat",izoh:"E’tiborni muayyan narsaga qaratish.",misol:"Darsda diqqat bilan tingladim."},
+{soz:"do‘stlik",izoh:"O‘zaro ishonch va mehrga asoslangan munosabat.",misol:"Haqiqiy do‘stlik qadrlidir."},
+{soz:"dunyo",izoh:"Yer yuzi, borliq yoki koinot.",misol:"Dunyo juda keng va rang-barang."},
+{soz:"ehtirom",izoh:"Hurmat va yuksak qadrlash.",misol:"U ustoziga ehtirom ko‘rsatdi."},
+{soz:"ehtiyoj",izoh:"Biror narsaga bo‘lgan zarurat.",misol:"Insonning bilimga ehtiyoji katta."},
+{soz:"e’tibor",izoh:"Biror kishiga yoki narsaga diqqat qaratish.",misol:"U maslahatga e’tibor berdi."},
+{soz:"ezgulik",izoh:"Yaxshilik va xayrli ishlar majmui.",misol:"Ezgulik doimo qadrlanadi."},
+{soz:"fazilat",izoh:"Insonning ijobiy axloqiy xususiyati.",misol:"Halollik yaxshi fazilatdir."},
+{soz:"farosat",izoh:"Vaziyatni anglash va to‘g‘ri fikr yuritish qobiliyati.",misol:"U farosat bilan muammoni hal qildi."},
+{soz:"farovonlik",izoh:"To‘kinlik va yaxshi yashash sharoiti.",misol:"Xalq farovonligi muhim maqsaddir."},
+{soz:"fikr",izoh:"Inson ongida paydo bo‘ladigan o‘y yoki mulohaza.",misol:"Men o‘z fikrimni bildirdim."},
+{soz:"fidoyilik",izoh:"Maqsad yoki ezgu ish uchun jonbozlik ko‘rsatish.",misol:"Ustozning fidoyiligi barchaga o‘rnak."},
+{soz:"g‘amxo‘rlik",izoh:"Boshqalarning holidan xabar olish va ularga yordam berish.",misol:"Ota-onam menga g‘amxo‘rlik qiladi."},
+{soz:"g‘urur",izoh:"O‘z qadrini yoki yutuqlarini munosib his etish.",misol:"U xalqining yutuqlaridan g‘ururlandi."},
+{soz:"haqiqat",izoh:"Voqelikka mos, rost holat.",misol:"Haqiqatni aytish muhim."},
+{soz:"halollik",izoh:"Rostgo‘ylik va vijdonan ish tutish.",misol:"Halollik insonning obro‘sini oshiradi."},
+{soz:"hamjihatlik",izoh:"Bir maqsad yo‘lida birgalikda harakat qilish.",misol:"Hamjihatlik bilan katta ishlarni bajarish mumkin."},
+{soz:"harakat",izoh:"Ish bajarish yoki joyini o‘zgartirish jarayoni.",misol:"Maqsadga erishish uchun harakat kerak."},
+{soz:"hikmat",izoh:"Chuqur ma’noli fikr yoki dono xulosa.",misol:"Bobom hikmatli so‘z aytdi."},
+{soz:"himmat",izoh:"Saxovat, oliyjanoblik va yuksak intilish.",misol:"Uning himmati ko‘pchilikka yordam berdi."},
+{soz:"hurmat",izoh:"Boshqa kishining qadrini tan olish.",misol:"Kattalarni hurmat qilish lozim."},
+{soz:"ilm",izoh:"O‘rganish va izlanish orqali egallanadigan bilimlar majmui.",misol:"Ilm inson dunyoqarashini kengaytiradi."},
+{soz:"ilmiy",izoh:"Ilm-fanga oid yoki ilmiy usulga asoslangan.",misol:"O‘quvchi ilmiy maqola o‘qidi."},
+{soz:"ijod",izoh:"Yangi asar, fikr yoki g‘oya yaratish faoliyati.",misol:"Ijod inson tasavvurini rivojlantiradi."},
+{soz:"ijodkor",izoh:"Yangi asar yoki g‘oya yaratuvchi inson.",misol:"Ijodkor yangi hikoya yozdi."},
+{soz:"iymon",izoh:"Diniy e’tiqod va ishonch.",misol:"U iymon va vijdon haqida suhbatlashdi."},
+{soz:"insof",izoh:"Vijdonan va adolat bilan ish tutish xususiyati.",misol:"Insof bilan qaror chiqarish kerak."},
+{soz:"inson",izoh:"Fikrlash va ongli faoliyat yuritish qobiliyatiga ega mavjudot.",misol:"Har bir inson hurmatga loyiq."},
+{soz:"insonparvarlik",izoh:"Inson qadr-qimmati va farovonligini ulug‘lash.",misol:"Insonparvarlik mehr-oqibatda namoyon bo‘ladi."},
+{soz:"ishonch",izoh:"Biror kishi yoki narsaga ishonish hissi.",misol:"U do‘stiga ishonch bildirdi."},
+{soz:"istak",izoh:"Biror narsaga ega bo‘lish yoki uni amalga oshirish xohishi.",misol:"Uning kitob yozish istagi bor."},
+{soz:"istiqlol",izoh:"Mustaqillik va erkinlik holati.",misol:"Istiqlol xalqimiz uchun muhim qadriyatdir."},
+{soz:"istiqbol",izoh:"Kelajak va oldinda turgan imkoniyatlar.",misol:"Yoshlarning istiqboli porloq."},
+{soz:"izlanish",izoh:"Yangi bilim yoki yechim topish uchun o‘rganish jarayoni.",misol:"Izlanish orqali yangi ma’lumot topdim."},
+{soz:"jasorat",izoh:"Qo‘rquv va qiyinchilikni yengib harakat qilish.",misol:"U jasorat bilan yordamga keldi."},
+{soz:"jamiyat",izoh:"Umumiy hayot va munosabatlar bilan bog‘langan insonlar majmui.",misol:"Jamiyat taraqqiyoti ta’limga ham bog‘liq."},
+{soz:"javobgarlik",izoh:"O‘z vazifasi va xatti-harakati uchun mas’ul bo‘lish.",misol:"Har bir ishda javobgarlikni his qilish kerak."},
+{soz:"jilo",izoh:"Narsa yuzasidagi yaltiroqlik yoki ko‘rk.",misol:"Quyosh nuri barglarga jilo berdi."},
+{soz:"jipslik",izoh:"Birlik va o‘zaro yaqinlik holati.",misol:"Jamoaning jipsligi ishni osonlashtirdi."},
+{soz:"jonkuyar",izoh:"Biror ish yoki kishiga chin dildan qayg‘uradigan.",misol:"Jonkuyar ustoz o‘quvchilariga yordam berdi."},
+{soz:"kamolot",izoh:"Yetuklik va mukammallikka erishish holati.",misol:"Bilim inson kamolotiga xizmat qiladi."},
+{soz:"kamtarlik",izoh:"O‘zini boshqalardan ustun qo‘ymaslik xususiyati.",misol:"Kamtarlik insonni ulug‘laydi."},
+{soz:"kelajak",izoh:"Hozirgi vaqtdan keyin keladigan davr.",misol:"Kelajak bugungi mehnatimizga bog‘liq."},
+{soz:"kengash",izoh:"Maslahatlashish yoki muhokama qilish yig‘ini.",misol:"Masalani kengashda muhokama qildik."},
+{soz:"koinot",izoh:"Yer, sayyoralar, yulduzlar va boshqa osmon jismlarini qamrab olgan borliq.",misol:"Olimlar koinotni o‘rganmoqda."},
+{soz:"ko‘nikma",izoh:"Mashq va tajriba orqali shakllangan qobiliyat.",misol:"Kitob o‘qish ko‘nikmasini rivojlantirdim."},
+{soz:"madaniyat",izoh:"Jamiyatning ma’naviy va moddiy qadriyatlari hamda faoliyati.",misol:"Kitobxonlik madaniyatni oshiradi."},
+{soz:"ma’naviyat",izoh:"Insonning axloqiy, ruhiy va ma’rifiy qadriyatlari majmui.",misol:"Ma’naviyat inson hayotida muhim o‘rin tutadi."},
+{soz:"mahorat",izoh:"Biror ishni yuqori darajada bajara olish qobiliyati.",misol:"U pazandachilik mahoratini namoyish etdi."},
+{soz:"maqsad",izoh:"Erishish ko‘zlangan natija yoki niyat.",misol:"Maqsadim yaxshi mutaxassis bo‘lish."},
+{soz:"mas’uliyat",izoh:"Vazifa va majburiyatlarni anglab, ularga javob berish.",misol:"Mas’uliyat bilan ishlash zarur."},
+{soz:"mehr",izoh:"Samimiy sevgi, iliqlik va g‘amxo‘rlik hissi.",misol:"Onaning mehri beqiyos."},
+{soz:"mehnat",izoh:"Maqsadga erishish uchun bajariladigan jismoniy yoki aqliy faoliyat.",misol:"Mehnat insonni tajribali qiladi."},
+{soz:"mehnatsevar",izoh:"Mehnat qilishni yaxshi ko‘radigan va tirishqoq.",misol:"Mehnatsevar o‘quvchi muntazam shug‘ullanadi."},
+{soz:"meros",izoh:"Avlodlardan qolgan moddiy yoki ma’naviy boylik.",misol:"Tilimiz bebaho merosimizdir."},
+{soz:"muloqot",izoh:"Odamlarning fikr va ma’lumot almashish jarayoni.",misol:"Muloqot orqali ko‘p narsani o‘rgandim."},
+{soz:"mulohaza",izoh:"Biror masala haqida o‘ylab chiqarilgan fikr.",misol:"U masala yuzasidan mulohaza bildirdi."},
+{soz:"mustaqillik",izoh:"Erkin va o‘z qarorini o‘zi qabul qilish holati.",misol:"Mustaqillik yurtimizning muhim qadriyatidir."},
+{soz:"nafosat",izoh:"Go‘zallik va nozik did bilan bog‘liq xususiyat.",misol:"She’rda nafosat sezilib turadi."},
+{soz:"natija",izoh:"Faoliyat yoki jarayon yakunida hosil bo‘lgan holat.",misol:"Tinimsiz mashq yaxshi natija berdi."},
+{soz:"nazokat",izoh:"Noziklik, muloyimlik va odob bilan ish tutish.",misol:"U nazokat bilan gapirdi."},
+{soz:"niyat",izoh:"Amalga oshirish ko‘zlangan maqsad yoki ichki istak.",misol:"Uning niyati odamlarga yordam berish."},
+{soz:"odob",izoh:"Jamiyatda qabul qilingan yaxshi xulq va muomala qoidalari.",misol:"Odobli bola kattalarga salom beradi."},
+{soz:"orzu",izoh:"Kelajakda amalga oshishi istalgan xohish.",misol:"Mening orzum yaxshi dasturchi bo‘lish."},
+{soz:"ota-ona",izoh:"Farzandning otasi va onasi.",misol:"Ota-onamni hurmat qilaman."},
+{soz:"oqibat",izoh:"Biror ish yoki hodisa natijasida yuzaga kelgan holat; mehr-oqibat ma’nosida ham ishlatiladi.",misol:"Har bir qarorning oqibati bo‘ladi."},
+{soz:"qadriyat",izoh:"Xalq yoki jamiyat muhim deb biladigan ma’naviy va madaniy boylik.",misol:"Til va urf-odatlarimiz qadriyatlarimizdir."},
+{soz:"qadr",izoh:"Biror kishi yoki narsaning qiymati va ahamiyati.",misol:"Vaqtning qadriga yetish kerak."},
+{soz:"qanoat",izoh:"Bor narsaga shukr qilib, me’yorni bilish.",misol:"Qanoat insonni xotirjam qiladi."},
+{soz:"qat’iyat",izoh:"Maqsad sari izchil va sobit harakat qilish xususiyati.",misol:"U qat’iyat bilan o‘qishni davom ettirdi."},
+{soz:"qobiliyat",izoh:"Biror faoliyatni muvaffaqiyatli bajarishga yordam beradigan xususiyat.",misol:"Unda til o‘rganish qobiliyati bor."},
+{soz:"rahm",izoh:"Boshqaning holiga achinish va unga mehr ko‘rsatish hissi.",misol:"U muhtojlarga rahm ko‘rsatdi."},
+{soz:"ravnaq",izoh:"Rivojlanish, yuksalish va gullab-yashnash.",misol:"Ilm-fan ravnaqi mamlakatga foyda keltiradi."},
+{soz:"rostgo‘ylik",izoh:"Haqiqatni aytish va yolg‘ondan tiyilish xususiyati.",misol:"Rostgo‘ylik ishonchni mustahkamlaydi."},
+{soz:"sabr",izoh:"Qiyinchiliklarga chidash va shoshilmaslik xususiyati.",misol:"Sabr bilan maqsadga erishish mumkin."},
+{soz:"samimiyat",izoh:"Chin dildan va soxtaliksiz munosabatda bo‘lish.",misol:"Uning samimiyati barchaga yoqdi."},
+{soz:"saxovat",izoh:"Boshqalarga beminnat yordam va ne’mat ulashish.",misol:"Saxovat insonlar orasidagi mehrni oshiradi."},
+{soz:"tafakkur",izoh:"Fikrlash va voqea-hodisalarni anglash jarayoni.",misol:"Kitob o‘qish tafakkurni rivojlantiradi."},
+{soz:"taraqqiyot",izoh:"Rivojlanish va oldinga siljish jarayoni.",misol:"Ta’lim taraqqiyot uchun muhim."},
+{soz:"tashabbus",izoh:"Biror ishni boshlashga qaratilgan faol taklif yoki harakat.",misol:"U yangi loyiha tashabbusi bilan chiqdi."},
+{soz:"tinchlik",izoh:"Urush va nizolar bo‘lmagan osoyishta holat.",misol:"Tinchlik eng katta ne’matlardan biridir."},
+{soz:"umid",izoh:"Yaxshi natija yuz berishiga bo‘lgan ishonch.",misol:"U muvaffaqiyatga umid bilan qaradi."},
+{soz:"vatan",izoh:"Inson tug‘ilib o‘sgan yoki o‘z yurti deb bilgan mamlakat.",misol:"Vatanimni sevaman va qadrlayman."},
+{soz:"vijdon",izoh:"Insonning o‘z xatti-harakatini axloqiy jihatdan baholash tuyg‘usi.",misol:"Vijdon bilan ish tutish kerak."},
+{soz:"vafo",izoh:"Sadoqat va bergan va’dasiga sodiq qolish.",misol:"Vafo ishonchni mustahkamlaydi."},
+{soz:"xotira",izoh:"Ma’lumot va kechinmalarni eslab qolish hamda qayta esga tushirish qobiliyati.",misol:"Bu voqea xotiramda saqlanib qolgan."},
+{soz:"xalq",izoh:"Umumiy tarix, til yoki hudud bilan bog‘langan kishilar jamoasi.",misol:"Xalqimiz boy madaniyatga ega."},
+{soz:"yaxshilik",izoh:"Boshqalarga foyda keltiradigan ezgu ish.",misol:"Yaxshilik qilish insonni quvontiradi."},
+{soz:"yuksalish",izoh:"Rivojlanish va yuqori darajaga ko‘tarilish.",misol:"Bilim insonning yuksalishiga yordam beradi."},
+{soz:"zavq",izoh:"Biror narsadan olinadigan yoqimli his va mamnunlik.",misol:"U musiqa tinglashdan zavq oladi."},
+{soz:"abadiy",izoh:"Cheksiz davom etadigan, nihoyasi yo‘q.",misol:"Inson ezgu ishlari bilan abadiy esda qoladi."},
+{soz:"abjir",izoh:"Chaqqon va harakatchan.",misol:"Abjir bola vazifani tez bajardi."},
+{soz:"abjirlik",izoh:"Chaqqonlik va epchillik xususiyati.",misol:"Uning abjirligi hammaga yoqdi."},
+{soz:"abgor",izoh:"Ayanchli yoki yomon ahvoldagi.",misol:"Bog‘ qarovsiz qolib, abgor holga kelgan."},
+{soz:"abadiyat",izoh:"Cheksiz vaqt, mangu davomiylik.",misol:"Shoir abadiyat haqida yozdi."},
+{soz:"abjirona",izoh:"Chaqqonlik bilan bajarilgan.",misol:"U topshiriqni abjirona bajardi."},
+{soz:"achchiq",izoh:"Ta’m sezgisida o‘tkir yoki taxir bo‘lgan.",misol:"Bu qalampir juda achchiq."},
+{soz:"achchiqlanmoq",izoh:"Jahli chiqmoq yoki g‘azablanmoq.",misol:"U noo‘rin gapdan achchiqlandi."},
+{soz:"achinish",izoh:"Birovning holiga rahmi kelish.",misol:"U yordamga muhtojlarga achinish bildirdi."},
+{soz:"achchiqso‘z",izoh:"Qattiq va ko‘ngilga tegadigan gap.",misol:"Achchiqso‘z odam boshqalarni ranjitishi mumkin."},
+{soz:"achchiqtosh",izoh:"Ayrim kimyoviy birikmalarning xalq orasidagi nomi.",misol:"Ustoz achchiqtosh haqida ma’lumot berdi."},
+{soz:"achchiq-chuchuk",izoh:"Turli ta’m va holatlar aralashmasi; salat nomi.",misol:"Dasturxonga achchiq-chuchuk salat qo‘yildi."},
+{soz:"adashmoq",izoh:"To‘g‘ri yo‘lni yoki yo‘nalishni yo‘qotmoq.",misol:"Sayyoh o‘rmonda adashib qoldi."},
+{soz:"adovat",izoh:"Kuchli dushmanlik va yomon ko‘rish hissi.",misol:"Adovat o‘rniga murosa tanlandi."},
+{soz:"ado",izoh:"Tugash yoki nihoyasiga yetish holati.",misol:"U barcha ishlarini ado etdi."},
+{soz:"ado etmoq",izoh:"Vazifa yoki ishni bajarib tugatmoq.",misol:"U o‘z burchini ado etdi."},
+{soz:"afsona",izoh:"Xalq orasida tarqalgan, ko‘pincha xayoliy voqealar haqidagi hikoya.",misol:"Bobom qadimiy afsona aytib berdi."},
+{soz:"afsonaviy",izoh:"Afsonaga oid yoki juda mashhur va g‘ayrioddiy.",misol:"Afsonaviy qahramon haqida kitob o‘qidim."},
+{soz:"afsus",izoh:"Biror holatdan qayg‘urish yoki pushaymonlik hissi.",misol:"Afsuski, uchrashuvga kechikdim."},
+{soz:"afsuslanmoq",izoh:"Biror ish yoki holat uchun pushaymon bo‘lmoq.",misol:"U shoshilib qilgan qaroridan afsuslandi."},
+{soz:"ekstraditsiya",izoh:"Jinoyatda ayblangan yoki hukm qilingan shaxsni boshqa davlatga topshirish.",misol:"Davlatlar jinoyatchini ekstraditsiya qilish masalasini muhokama qildi."},
+{soz:"elektorat",izoh:"Saylovda ovoz berish huquqiga ega bo‘lgan saylovchilar majmui.",misol:"Elektorat saylovda o‘z tanlovini amalga oshirdi."},
+{soz:"embargo",izoh:"Savdo yoki boshqa faoliyatga qo‘yiladigan taqiq yoki cheklov.",misol:"Davlat ayrim mahsulotlarga embargo joriy etdi."},
+{soz:"emigrant",izoh:"O‘z mamlakatidan boshqa davlatga yashash uchun ko‘chib ketgan shaxs.",misol:"Emigrant boshqa mamlakatda yangi hayot boshladi."},
+{soz:"emigratsiya",izoh:"O‘z mamlakatidan boshqa mamlakatga yashash uchun ko‘chib ketish.",misol:"Ish imkoniyatlari emigratsiyaga sabab bo‘lishi mumkin."},
+{soz:"evakuatsiya",izoh:"Odamlarni xavfli hududdan xavfsiz joyga ko‘chirish.",misol:"Suv toshqini xavfi sababli evakuatsiya boshlandi."},
+{soz:"federatsiya",izoh:"Muayyan vakolatlari saqlangan hududiy birliklardan tashkil topgan davlat tuzilishi.",misol:"Germaniya federativ davlat hisoblanadi."},
+{soz:"fraksiya",izoh:"Parlament yoki boshqa vakillik organidagi siyosiy guruh.",misol:"Fraksiya yangi qonun loyihasini qo‘llab-quvvatladi."},
+{soz:"fuqaro",izoh:"Muayyan davlat bilan huquqiy va siyosiy aloqaga ega shaxs.",misol:"Har bir fuqaro qonunlarga rioya qilishi kerak."},
+{soz:"garantiya",izoh:"Biror majburiyat yoki mahsulot sifati uchun beriladigan kafolat.",misol:"Telefon uchun bir yillik garantiya berildi."},
+{soz:"garnizon",izoh:"Muayyan hududda joylashgan harbiy qismlar majmui.",misol:"Garnizon hudud xavfsizligini ta’minlashda qatnashdi."},
+{soz:"general",izoh:"Qurolli kuchlardagi yuqori harbiy unvon.",misol:"General harbiy yig‘ilishda nutq so‘zladi."},
+{soz:"granitsa",izoh:"Chegara ma’nosidagi so‘z; o‘zbek tilida chegara shakli afzal.",misol:"Davlat chegarasi maxsus tartibda qo‘riqlanadi."},
+{soz:"illegal",izoh:"Qonunga zid yoki qonun bilan taqiqlangan.",misol:"Illegal faoliyat uchun javobgarlik belgilangan."},
+{soz:"immigrant",izoh:"Boshqa mamlakatdan yashash uchun kelgan shaxs.",misol:"Immigrant yangi mamlakatda ish topdi."},
+{soz:"imtiyoz",izoh:"Muayyan shaxs yoki guruhga beriladigan alohida huquq yoki yengillik.",misol:"Talabalarga ayrim xizmatlar uchun imtiyoz berildi."},
+{soz:"inspeksiya",izoh:"Qoidalar bajarilishini tekshiruvchi organ yoki tekshiruv faoliyati.",misol:"Inspeksiya xavfsizlik qoidalarini tekshirdi."},
+{soz:"inspektor",izoh:"Tekshiruv va nazorat ishlarini bajaruvchi xodim.",misol:"Inspektor hujjatlarni ko‘zdan kechirdi."},
+{soz:"instruksiya",izoh:"Biror ishni bajarish tartibini tushuntiruvchi yo‘riqnoma.",misol:"Qurilmani ishlatishdan oldin instruksiyani o‘qing."},
+{soz:"jinoyat",izoh:"Qonunda jinoyat deb belgilangan ijtimoiy xavfli qilmish.",misol:"Jinoyat sodir etgan shaxs qonun asosida javob beradi."},
+{soz:"kabinet",izoh:"Xona yoki siyosatda hukumat tarkibi ma’nosida ishlatiladigan so‘z.",misol:"Vazirlar kabineti yangi qarorni muhokama qildi."},
+{soz:"kengash",izoh:"Masalalarni muhokama qilish va qarorlar ishlab chiqish uchun tuzilgan organ yoki yig‘ilish.",misol:"Kengash yangi rejani tasdiqladi."},
+{soz:"koalitsiya",izoh:"Umumiy maqsad yo‘lida birlashgan davlatlar, partiyalar yoki tashkilotlar ittifoqi.",misol:"Partiyalar hukumat tuzish uchun koalitsiya tashkil etdi."},
+{soz:"koloniya",izoh:"Boshqa davlat tomonidan siyosiy va iqtisodiy jihatdan bo‘ysundirilgan hudud.",misol:"Tarixda ayrim hududlar koloniya bo‘lgan."},
+{soz:"komandir",izoh:"Harbiy qism yoki bo‘linmaga boshchilik qiluvchi shaxs.",misol:"Komandir askarlarga vazifa berdi."},
+{soz:"komissiya",izoh:"Muayyan vazifani bajarish yoki masalani o‘rganish uchun tuzilgan guruh.",misol:"Komissiya imtihon natijalarini tekshirdi."},
+{soz:"komitet",izoh:"Muayyan vazifalarni bajaruvchi yoki sohani boshqaruvchi qo‘mita.",misol:"Komitet yangi takliflarni ko‘rib chiqdi."},
+{soz:"kompensatsiya",izoh:"Yetkazilgan zarar yoki yo‘qotish o‘rnini qoplash uchun beriladigan tovon.",misol:"Zarar ko‘rgan fuqarolarga kompensatsiya to‘landi."},
+{soz:"konfiskatsiya",izoh:"Mol-mulkni qonuniy asosda davlat foydasiga majburiy olib qo‘yish.",misol:"Mol-mulk sud qarori asosida konfiskatsiya qilindi."},
+{soz:"konstitutsiya",izoh:"Davlatning asosiy qonuni bo‘lib, davlat tuzilishi va fuqarolarning asosiy huquqlarini belgilaydi.",misol:"Konstitutsiya davlatning asosiy qonunidir."},
+{soz:"konsul",izoh:"Boshqa davlatda o‘z mamlakati fuqarolari manfaatlarini himoya qiluvchi rasmiy vakil.",misol:"Konsul chet eldagi fuqaroga yordam berdi."},
+{soz:"konsullik",izoh:"Konsul ishlaydigan va konsullik xizmatlari ko‘rsatiladigan muassasa.",misol:"Fuqaro konsullikka murojaat qildi."},
+{soz:"konsultant",izoh:"Muayyan masala bo‘yicha professional maslahat beruvchi mutaxassis.",misol:"Konsultant loyihani yaxshilash bo‘yicha tavsiya berdi."},
+{soz:"konsultatsiya",izoh:"Mutaxassisdan maslahat olish yoki maslahat berish jarayoni.",misol:"Talaba huquqshunosdan konsultatsiya oldi."},
+{soz:"kontrakt",izoh:"Tomonlarning huquq va majburiyatlarini belgilovchi shartnoma.",misol:"Tomonlar kontraktni imzoladi."},
+{soz:"konvensiya",izoh:"Davlatlar yoki tashkilotlar o‘rtasidagi muayyan masalaga oid rasmiy bitim.",misol:"Davlatlar xalqaro konvensiyaga qo‘shildi."},
+{soz:"kriminal",izoh:"Jinoyat yoki jinoyatchilikka oid.",misol:"Kriminal holat yuzasidan tergov boshlandi."},
+{soz:"legal",izoh:"Qonuniy, qonun talablariga muvofiq.",misol:"Korxona faoliyatini legal asosda olib bordi."},
+{soz:"legitim",izoh:"Qonuniy yoki asosli deb tan olingan.",misol:"Hokimiyatning legitimligi muhim siyosiy masaladir."},
+{soz:"lider",izoh:"Guruh yoki jamoaga yetakchilik qiluvchi shaxs.",misol:"Lider jamoani umumiy maqsad sari birlashtirdi."},
+{soz:"litsenziya",izoh:"Muayyan faoliyatni amalga oshirish uchun beriladigan rasmiy ruxsat.",misol:"Korxona faoliyat boshlashdan oldin litsenziya oldi."},
+{soz:"metropoliya",izoh:"Mustamlakalarga ega bo‘lgan yoki ularni boshqargan davlat.",misol:"Metropoliya mustamlakalar ustidan nazorat o‘rnatgan."},
+{soz:"migratsiya",izoh:"Odamlarning bir hududdan boshqa hududga ko‘chishi.",misol:"Mehnat migratsiyasi ko‘plab mamlakatlarda uchraydi."},
+{soz:"ministr",izoh:"Vazir ma’nosidagi so‘z; o‘zbek tilida vazir shakli afzal.",misol:"Vazir yangi dastur haqida ma’lumot berdi."},
+{soz:"ministrlik",izoh:"Vazir boshqaradigan davlat organi; o‘zbek tilida vazirlik shakli afzal.",misol:"Vazirlik yangi qoidalarni e’lon qildi."},
+{soz:"mobilizatsiya",izoh:"Davlat yoki qurolli kuchlarni muayyan vaziyatga tayyorlash uchun safarbar etish.",misol:"Favqulodda vaziyatda resurslarni mobilizatsiya qilish rejalashtirildi."},
+{soz:"monarxiya",izoh:"Davlat boshlig‘i monarx bo‘lgan boshqaruv shakli.",misol:"Buyuk Britaniya konstitutsiyaviy monarxiyadir."},
+{soz:"neytralitet",izoh:"Xalqaro mojarolar yoki urushlarda betaraflik maqomi.",misol:"Davlat o‘z neytralitetini e’lon qildi."},
+{soz:"notarius",izoh:"Hujjatlar va ayrim yuridik faktlarni qonunda belgilangan tartibda tasdiqlovchi vakolatli shaxs.",misol:"Notarius shartnomani tasdiqladi."},
+{soz:"ofitser",izoh:"Qurolli kuchlar yoki maxsus xizmatlardagi ofitserlik unvoniga ega shaxs.",misol:"Ofitser harbiy mashg‘ulotni boshqardi."},
+{soz:"okkupatsiya",izoh:"Bir davlat hududining boshqa davlat qurolli kuchlari tomonidan egallanishi.",misol:"Okkupatsiya davrida hudud chet el qo‘shinlari nazoratida bo‘lgan."},
+{soz:"oppozitsiya",izoh:"Hukumat yoki hukmron siyosiy kuch siyosatiga qarshi fikr bildiruvchi siyosiy kuchlar.",misol:"Oppozitsiya qonun loyihasiga e’tiroz bildirdi."},
+{soz:"parlament",izoh:"Qonun chiqaruvchi oliy vakillik organi.",misol:"Parlament yangi qonunni qabul qildi."},
+{soz:"partiya",izoh:"Muayyan siyosiy qarash va maqsadlar asosida birlashgan tashkilot.",misol:"Partiya saylovlarda o‘z dasturini taqdim etdi."},
+{soz:"pasport",izoh:"Shaxsni tasdiqlovchi rasmiy hujjat.",misol:"Sayohatchi pasportini tekshiruvga taqdim etdi."},
+{soz:"patrul",izoh:"Hududni nazorat qilish va xavfsizlikni ta’minlash uchun harakatlanuvchi shaxs yoki guruh.",misol:"Patrul ko‘chalarda tartibni nazorat qildi."},
+{soz:"premyer-ministr",izoh:"Ko‘plab davlatlarda hukumat rahbariga beriladigan unvon.",misol:"Premyer-ministr hukumat yig‘ilishiga raislik qildi."},
+{soz:"prezident",izoh:"Respublika boshlig‘i lavozimi.",misol:"Prezident rasmiy murojaat bilan chiqdi."},
+{soz:"privilegiya",izoh:"Ayrim shaxs yoki guruhga berilgan alohida huquq yoki ustunlik.",misol:"Qonun ayrim toifalarga maxsus privilegiyalar beradi."},
+{soz:"prokuror",izoh:"Qonunda belgilangan vakolatlar doirasida davlat ayblovini qo‘llab-quvvatlovchi mansabdor shaxs.",misol:"Prokuror sudda davlat ayblovini qo‘llab-quvvatladi."},
+{soz:"protektorat",izoh:"Boshqa davlat himoyasi yoki nazorati ostida bo‘lgan, mustaqilligi cheklangan hudud yoki davlat.",misol:"Tarixda ayrim hududlar protektorat maqomida bo‘lgan."},
+{soz:"protokol",izoh:"Rasmiy uchrashuv tartibi yoki yig‘ilish natijalari qayd etilgan hujjat.",misol:"Yig‘ilish protokoli tasdiqlandi."},
+{soz:"provinsiya",izoh:"Ayrim mamlakatlardagi ma’muriy-hududiy birlik.",misol:"Provinsiya mahalliy boshqaruv organiga ega."},
+{soz:"qonun",izoh:"Vakolatli qonun chiqaruvchi organ qabul qiladigan majburiy huquqiy qoidalar hujjati.",misol:"Yangi qonun belgilangan tartibda kuchga kirdi."},
+{soz:"ratifikatsiya",izoh:"Xalqaro shartnomani davlat tomonidan belgilangan tartibda rasman tasdiqlash.",misol:"Xalqaro shartnoma ratifikatsiya qilindi."},
+{soz:"referendum",izoh:"Muhim davlat yoki jamiyat masalasi bo‘yicha umumxalq ovoz berishi.",misol:"Muhim masala referendumga qo‘yildi."},
+{soz:"region",izoh:"Muayyan geografik, iqtisodiy yoki ma’muriy xususiyatlarga ega hudud.",misol:"Region iqtisodiyotini rivojlantirish dasturi ishlab chiqildi."},
+{soz:"registratsiya",izoh:"Shaxs, tashkilot yoki ma’lumotni rasmiy ro‘yxatga kiritish.",misol:"Tashkilot registratsiyadan o‘tdi."},
+{soz:"reglament",izoh:"Muayyan organ yoki tadbir faoliyati tartibi va qoidalarini belgilovchi hujjat.",misol:"Majlis reglamentiga muvofiq har bir vakilga so‘z berildi."},
+{soz:"regulyatsiya",izoh:"Jarayon yoki faoliyatni belgilangan qoidalar asosida tartibga solish.",misol:"Bozor faoliyatini regulyatsiya qilish mexanizmi ishlab chiqildi."},
+{soz:"repatriatsiya",izoh:"Shaxslarni o‘z vataniga yoki mol-mulkni kelib chiqqan mamlakatiga qaytarish.",misol:"Fuqarolarni repatriatsiya qilish dasturi boshlandi."},
+{soz:"respublika",izoh:"Davlat boshlig‘i va asosiy davlat organlari belgilangan tartibda shakllanadigan boshqaruv shakli.",misol:"O‘zbekiston respublika hisoblanadi."},
+{soz:"revizor",izoh:"Moliyaviy hujjatlar, hisob-kitoblar yoki faoliyatni tekshiruvchi mutaxassis.",misol:"Revizor moliyaviy hujjatlarni tekshirdi."},
+{soz:"reviziya",izoh:"Moliyaviy yoki xo‘jalik faoliyatini hujjatlar asosida tekshirish.",misol:"Korxonada moliyaviy reviziya o‘tkazildi."},
+{soz:"reyestr",izoh:"Rasmiy qayd etilgan shaxslar, obyektlar yoki ma’lumotlarning tizimli ro‘yxati.",misol:"Korxona davlat reyestriga kiritildi."},
+{soz:"rezident",izoh:"Muayyan davlatda doimiy yashovchi yoki qonunchilikka ko‘ra tegishli maqomga ega shaxs yoki tashkilot.",misol:"Soliq rezidenti tegishli soliq qoidalariga amal qiladi."},
+{soz:"rezolyutsiya",izoh:"Yig‘ilish yoki vakolatli organ tomonidan qabul qilingan rasmiy qaror.",misol:"Tashkilot yig‘ilish yakunida rezolyutsiya qabul qildi."},
+{soz:"sanksiya",izoh:"Qoidabuzarlik uchun qo‘llanadigan chora yoki davlatlar joriy etadigan cheklov.",misol:"Qoidani buzgan tashkilotga sanksiya qo‘llanildi."},
+{soz:"saylov",izoh:"Ovoz berish orqali vakillar yoki davlat mansabdorlarini tanlash jarayoni.",misol:"Saylov belgilangan kunda o‘tkazildi."},
+{soz:"senat",izoh:"Ikki palatali parlamentning yuqori palatasi.",misol:"Senat qonunni ko‘rib chiqdi."},
+{soz:"sertifikat",izoh:"Muayyan sifat, malaka yoki talabga muvofiqlikni tasdiqlovchi hujjat.",misol:"Mutaxassis malakasini tasdiqlovchi sertifikat oldi."},
+{soz:"soldat",izoh:"Askar ma’nosidagi so‘z; o‘zbek tilida askar shakli afzal.",misol:"Askar harbiy mashg‘ulotda qatnashdi."},
+
+{soz:"ajdod",izoh:"Oldingi avlod vakili, ota-bobolar.",misol:"Ajdodlarimizdan boy meros qolgan."},
+{soz:"ajdodiy",izoh:"Ajdodlarga tegishli yoki ulardan qolgan.",misol:"Ajdodiy qadriyatlarimizni asraymiz."},
+{soz:"ajralmas",izoh:"Bir-biridan ajratib bo‘lmaydigan.",misol:"Til xalq madaniyatining ajralmas qismidir."},
+{soz:"ajralish",izoh:"Bir-biridan uzoqlashish yoki alohida bo‘lish.",misol:"Yo‘llarning ajralish joyida belgi bor."},
+{soz:"ajoyib",izoh:"Juda yaxshi, hayratlanarli yoki g‘aroyib.",misol:"Biz ajoyib manzarani tomosha qildik."},
+{soz:"alam",izoh:"Qayg‘u, iztirob yoki ko‘ngil og‘rig‘i.",misol:"Mag‘lubiyat unga alam qildi."},
+{soz:"alanga",izoh:"Yonayotgan olovning ko‘rinib turgan qismi.",misol:"Olov alangasi osmonga ko‘tarildi."},
+{soz:"alangalamoq",izoh:"Olov olmoq yoki kuchli yonmoq.",misol:"Quruq shoxlar tez alangaladi."},
+{soz:"albatta",izoh:"Shubhasiz, so‘zsiz.",misol:"Men albatta yordam beraman."},
+{soz:"aldamoq",izoh:"Birovni yolg‘on bilan chalg‘itmoq.",misol:"Boshqalarni aldash yaxshi emas."},
+{soz:"aldov",izoh:"Yolg‘on orqali chalg‘itish harakati.",misol:"Aldov ishonchni yo‘qotadi."},
+{soz:"alfoz",izoh:"So‘zlar, iboralar yoki ifoda usuli.",misol:"U fikrini muloyim alfozda bayon qildi."},
+{soz:"algoritm",izoh:"Muammoni yechish uchun belgilangan amallar ketma-ketligi.",misol:"Dasturchi masala uchun algoritm tuzdi."},
+{soz:"algebra",izoh:"Sonlar, belgilar va tenglamalarni o‘rganuvchi matematika bo‘limi.",misol:"Bugun algebra darsida tenglamalar yechdik."},
+{soz:"alohida",izoh:"Boshqalardan ajratilgan yoki o‘ziga xos.",misol:"Bu masalaga alohida e’tibor berdik."},
+{soz:"aloqa",izoh:"Odamlar yoki narsalar o‘rtasidagi bog‘lanish.",misol:"Internet orqali aloqa qildik."},
+{soz:"aloqador",izoh:"Biror ish yoki masalaga bog‘liq.",misol:"Bu hujjat loyihaga aloqador."},
+{soz:"alqissa",izoh:"Xullas, qisqasi ma’nosida ishlatiladigan so‘z.",misol:"Alqissa, ular safarlarini davom ettirdilar."},
+{soz:"amal",izoh:"Bajariladigan ish, harakat yoki qoida.",misol:"Yaxshi niyatni amalga oshirish kerak."},
+{soz:"amalda",izoh:"Haqiqiy hayotda yoki bajarish jarayonida.",misol:"Bu qoida amalda foyda beradi."},
+{soz:"amalga oshirmoq",izoh:"Reja yoki niyatni bajarib ro‘yobga chiqarmoq.",misol:"U o‘z rejasini amalga oshirdi."},
+{soz:"amaliy",izoh:"Amaliyot va bajariladigan ishga oid.",misol:"Darsda amaliy mashq bajardik."},
+{soz:"amaliyot",izoh:"Bilimni haqiqiy faoliyatda qo‘llash jarayoni.",misol:"Amaliyot davomida tajriba orttirdim."},
+{soz:"aniqlik",izoh:"Ravshanlik va xatosiz belgilanganlik.",misol:"Hisoblashda aniqlik muhim."},
+{soz:"aniqlamoq",izoh:"Biror narsani tekshirib, ma’lum qilmoq.",misol:"Olimlar moddaning tarkibini aniqladilar."},
+{soz:"aniq",izoh:"Ravshan, tushunarli va xatosiz.",misol:"U savolga aniq javob berdi."},
+{soz:"anjuman",izoh:"Muhokama yoki fikr almashish uchun o‘tkaziladigan yig‘in.",misol:"Shaharda ilmiy anjuman bo‘lib o‘tdi."},
+{soz:"anjom",izoh:"Biror ish uchun kerak bo‘ladigan buyum yoki jihoz.",misol:"Safar anjomlarini tayyorladik."},
+{soz:"anhor",izoh:"Suv oqadigan katta ariq yoki kanal.",misol:"Anhor bo‘yida daraxtlar o‘sadi."},
+{soz:"anor",izoh:"Donalari ko‘p, po‘sti qattiq meva.",misol:"Bog‘imizda anor pishdi."},
+{soz:"administratsiya",izoh:"Tashkilot, muassasa yoki hududni boshqaruvchi ma’muriy tizim; ma’muriyat.",misol:"Universitet administratsiyasi yangi tartibni e’lon qildi."},
+{soz:"advokat",izoh:"Huquqiy masalalarda maslahat beradigan va qonun doirasida himoya qiluvchi yurist.",misol:"Advokat sudda mijozining manfaatlarini himoya qildi."},
+{soz:"agressiya",izoh:"Boshqa davlat yoki shaxsga nisbatan tajovuzkor harakat.",misol:"Agressiya tinchlikka xavf tug‘diradi."},
+{soz:"agressor",izoh:"Boshqa davlat yoki tomonga tajovuz qiluvchi shaxs yoki davlat.",misol:"Agressor davlatga qarshi xalqaro choralar ko‘rildi."},
+{soz:"alyans",izoh:"Umumiy maqsad uchun tuzilgan ittifoq.",misol:"Davlatlar xavfsizlik alyansini tuzdilar."},
+{soz:"ambassador",izoh:"Ingliz tilida elchi degan ma’noni bildiradi; o‘zbekcha muqobili — elchi.",misol:"Ambassador xalqaro uchrashuvda mamlakatini vakillik qildi."},
+{soz:"amnistiya",izoh:"Muayyan toifadagi shaxslarni jinoiy javobgarlikdan yoki jazodan qonunda belgilangan tartibda ozod qilish.",misol:"Amnistiya masalasi qonun asosida ko‘rib chiqildi."},
+{soz:"anneksiya",izoh:"Bir davlat hududining boshqa davlat tomonidan bir tomonlama qo‘shib olinishi.",misol:"Anneksiya xalqaro huquq nuqtayi nazaridan baholandi."},
+{soz:"apparat",izoh:"Muassasa yoki davlat organining boshqaruv va ish yuritish tizimi.",misol:"Davlat apparati qonunlar asosida faoliyat yuritadi."},
+{soz:"ariza",izoh:"Biror iltimos, talab yoki murojaat yozma bayon etilgan hujjat.",misol:"U ishga qabul qilish haqida ariza yozdi."},
+{soz:"armiya",izoh:"Davlatning qurolli kuchlari yoki ularning asosiy qismi.",misol:"Armiya mamlakat mudofaasini ta’minlashga xizmat qiladi."},
+{soz:"arsenal",izoh:"Qurol-yarog‘ va harbiy jihozlar saqlanadigan joy; ko‘chma ma’noda vositalar majmui.",misol:"Harbiy arsenal maxsus qo‘riqlanadi."},
+{soz:"attestat",izoh:"Ta’lim bosqichi tugatilganini tasdiqlovchi rasmiy hujjat.",misol:"U maktabni bitirib, attestat oldi."},
+{soz:"avtonomiya",izoh:"Muayyan hudud yoki tashkilotning belgilangan doirada o‘zini o‘zi boshqarish huquqi.",misol:"Hudud avtonomiya asosida boshqariladi."},
+{soz:"blokada",izoh:"Hududga kirish-chiqish yoki ta’minot yo‘llarini to‘sib qo‘yish; qamal.",misol:"Blokada aholining ta’minotiga ta’sir ko‘rsatdi."},
+{soz:"byurokratiya",izoh:"Boshqaruvda rasmiy tartib-qoidalar va hujjatbozlikning haddan tashqari ko‘payishi; amaldorlar tizimi.",misol:"Ortiqcha byurokratiya ishlarning sekinlashishiga sabab bo‘ldi."},
+{soz:"deklaratsiya",izoh:"Davlat, tashkilot yoki shaxsning muhim tamoyil va qarashlarini bayon qiluvchi rasmiy hujjat.",misol:"Tashkilot yangi deklaratsiyani e’lon qildi."},
+{soz:"delegat",izoh:"Yig‘ilish yoki tashkilotda boshqalar nomidan qatnashish uchun vakolat berilgan shaxs.",misol:"Delegat anjumanda o‘z takliflarini bildirdi."},
+{soz:"delegatsiya",izoh:"Muayyan vazifa yoki tadbir uchun yuborilgan vakillar guruhi.",misol:"Xorijiy delegatsiya mamlakatimizga tashrif buyurdi."},
+{soz:"demobilizatsiya",izoh:"Harbiy kuchlarni safarbarlik holatidan tinchlik davridagi holatga qaytarish jarayoni.",misol:"Urush tugagach, demobilizatsiya boshlandi."},
+{soz:"demokratiya",izoh:"Xalq hokimiyati tamoyiliga asoslangan siyosiy boshqaruv shakli.",misol:"Demokratiyada fuqarolarning huquqlari muhim ahamiyatga ega."},
+{soz:"departament",izoh:"Muayyan yo‘nalish uchun mas’ul bo‘lgan davlat yoki tashkilot bo‘limi; boshqarma.",misol:"Departament yangi hisobotni tayyorladi."},
+{soz:"deportatsiya",izoh:"Shaxslarni yoki aholi guruhlarini qonuniy yoki tarixiy-siyosiy sharoitlarda majburan boshqa hududga ko‘chirish.",misol:"Tarix darsida deportatsiya hodisalari o‘rganildi."},
+{soz:"deputat",izoh:"Saylovchilar tomonidan vakillik organiga saylangan xalq vakili.",misol:"Deputat fuqarolar muammolarini muhokama qildi."},
+{soz:"dezertir",izoh:"Harbiy xizmatni o‘zboshimchalik bilan tashlab ketgan harbiy xizmatchi.",misol:"Harbiy qonunchilikda dezertirlik uchun javobgarlik belgilangan."},
+{soz:"diplom",izoh:"Ta’lim muassasasida o‘qish yoki malaka olishni tasdiqlovchi rasmiy hujjat.",misol:"U universitetni tugatib, diplom oldi."},
+{soz:"diplomat",izoh:"Davlatning tashqi aloqalarini amalga oshiruvchi va uning manfaatlarini xalqaro maydonda ifodalovchi xodim.",misol:"Diplomat ikki davlat o‘rtasidagi muzokarada qatnashdi."},
+{soz:"direktiva",izoh:"Vakolatli rahbar yoki organ tomonidan berilgan rasmiy ko‘rsatma.",misol:"Rahbariyat yangi direktiva chiqardi."},
+{soz:"dokument",izoh:"Hujjat ma’nosidagi so‘z; o‘zbek adabiy tilida odatda “hujjat” ishlatiladi.",misol:"Arxivga kerakli dokument, ya’ni hujjat topshirildi."},
+{soz:"ekspert",izoh:"Muayyan sohada chuqur bilim va tajribaga ega mutaxassis.",misol:"Ekspert loyiha bo‘yicha xulosa berdi."},
+{soz:"ekspertiza",izoh:"Mutaxassis tomonidan masala, hujjat yoki obyektni tekshirish va baholash jarayoni.",misol:"Loyiha ekspertizadan o‘tkazildi."},
+];
+
+
+        // Apostrof va katta-kichik harflarni bir xil ko'rinishga keltiramiz
+        function normallashtir(matn) {
+            return matn
+                .trim()
+                .toLowerCase()
+                .replace(/[‘’`ʻʼ]/g, "'");
+        }
+
+fetch("lugat.json")
+    .then(function(javob) {
+        if (!javob.ok) {
+            throw new Error("Lug‘at fayli topilmadi");
+        }
+        return javob.json();
+    })
+    .then(function(yangiSozlar) {
+        yangiSozlar.forEach(function(item) {
+            const mavjud = lugat.some(function(eski) {
+                return normallashtir(eski.soz) ===
+                       normallashtir(item.soz);
+            });
+
+            if (!mavjud) {
+                lugat.push(item);
+            }
+        });
+
+        console.log("JSON lug‘ati yuklandi!");
+    })
+    .catch(function(xato) {
+        console.error("Lug‘atni yuklashda xato:", xato);
+    });
+
+        const forma = document.getElementById("searchForm");
+        const input = document.getElementById("searchInput");
+        const natija = document.getElementById("result");
+
+        // Qidiruv tugmasi bosilganda ishlaydi
+        forma.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+           
+const qidiruv = normallashtir(input.value);
+
+if (qidiruv === "") {
+    natija.innerHTML = "<h2>So‘z kiriting!</h2><p>Iltimos, qidirish uchun so‘z yozing.</p>";
+    return;
+}
+
+// Avval to‘liq mos keladigan so‘zni qidiramiz
+const topilgan = lugat.find(function(item) {
+    return normallashtir(item.soz) === qidiruv;
+});
+
+if (topilgan) {
+    natija.innerHTML = `
+        <h2></h2>
+        <p><b>Izoh:</b> </p>
+        <p><b>Misol:</b> </p>
+    `;
+
+    natija.querySelector("h2").textContent = topilgan.soz;
+    const paragraflar = natija.querySelectorAll("p");
+    paragraflar[0].append(document.createTextNode(topilgan.izoh));
+    paragraflar[1].append(document.createTextNode(topilgan.misol));
+} else {
+    // To‘liq mos so‘z bo‘lmasa, boshlanishi mos so‘zlarni topamiz
+    const tavsiyalar = lugat.filter(function(item) {
+        return normallashtir(item.soz).startsWith(qidiruv);
+    });
+
+    natija.innerHTML = "";
+
+    const sarlavha = document.createElement("h2");
+    sarlavha.textContent = tavsiyalar.length
+        ? "Siz izlayotgan so‘zlar:"
+        : "So‘z topilmadi";
+
+    natija.appendChild(sarlavha);
+
+    if (tavsiyalar.length) {
+        const royxat = document.createElement("ul");
+
+        tavsiyalar.forEach(function(item) {
+            const li = document.createElement("li");
+            li.textContent = item.soz;
+            royxat.appendChild(li);
+        });
+
+        natija.appendChild(royxat);
+    } else {
+        const xabar = document.createElement("p");
+        xabar.textContent =
+            "Bu so‘z hozircha lug‘atimizda yo‘q. Boshqa so‘zni sinab ko‘ring.";
+        natija.appendChild(xabar);
+    }
+}
+});
+</script>
+
+<button id="themeToggle">🌙 Tungi rejim</button>
+
+<script>
+const themeToggle = document.getElementById("themeToggle");
+
+themeToggle.addEventListener("click", function() {
+    document.body.classList.toggle("dark-mode");
+
+    if (document.body.classList.contains("dark-mode")) {
+        themeToggle.textContent = "☀️ Yorug‘ rejim";
+    } else {
+        themeToggle.textContent = "🌙 Tungi rejim";
+    }
+});
+</script>
+
+</body>
+</html>
